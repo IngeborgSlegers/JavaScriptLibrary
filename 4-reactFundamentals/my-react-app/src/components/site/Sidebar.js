@@ -14,6 +14,10 @@ import ClassComponentDemo from '../ClassComponentDemo';
 import PropsDemo from '../concepts/PropsDemo';
 import LifeCycleDiagram from '../concepts/LifeCycleCodepen';
 import TimePiecesApp from '../apps/timer-apps/TimePiecesApp';
+import ReactConceptsApp from '../apps/concept-list-app/ReactConceptsApp';
+import MovieSearchApp from '../apps/movie-search-app/MovieApp';
+import NytApp from '../apps/nyt-app/NytApp';
+import FriendListApp from '../apps/friend-list-app/FriendListApp';
 
 const Sidebar = () => (
 
@@ -29,6 +33,10 @@ const Sidebar = () => (
                 <li><Link to="/lifecyclediagram">Life Cycle Diagram</Link></li>
                 <li><Link to="/resources">Resources</Link></li>
                 <li><Link to="/timer">Timers</Link></li>
+                <li><Link to="/reactconceptlist">React Concepts Checklist</Link></li>
+                <li><Link to="/movie">Movie Search App</Link></li>
+                <li><Link to="/nyt">New York Times</Link></li>
+                <li><Link to="/friendlist">Friend List App</Link></li>
             </ul>
         </div>
         <div className="sidebar-route">
@@ -48,7 +56,11 @@ const Sidebar = () => (
                 </Route> 
                 <Route exact path="/lifecyclediagram"><LifeCycleDiagram /></Route>   
                 <Route exact path="/jsxrules"><JSXRules /></Route>     
-                <Route exact path="/timer"><TimePiecesApp /></Route>       
+                <Route exact path="/timer"><TimePiecesApp /></Route> 
+                <Route exact path="/reactconceptlist"><ReactConceptsApp /></Route>
+                <Route exact path="/movie"><MovieSearchApp /></Route> 
+                <Route exact path="/nyt"><NytApp /></Route>     
+                <Route exact path="/friendlist"><FriendListApp /></Route>
             </Switch>
         </div>
     </div>
