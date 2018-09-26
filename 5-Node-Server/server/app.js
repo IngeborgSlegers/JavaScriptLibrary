@@ -2,8 +2,11 @@ var express = require('express');
 var app = express(); 
 var test = require('./controllers/testcontroller')
 var sequelize = require('./db');
+let bodyParser = require('body-parser');
 
 sequelize.sync();
+
+app.use(bodyParser.json());
 
 app.use('/test', test)
 
