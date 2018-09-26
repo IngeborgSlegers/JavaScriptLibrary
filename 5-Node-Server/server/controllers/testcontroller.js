@@ -95,6 +95,26 @@ router.post('/six', function (req, res) {
 /*************************
  * Route 7: Handle errors
 *************************/
+router.post('/seven', function (req, res) {
+    let testData = req.body.testdata.item;
+
+    TestModel
+    .create({
+        testdata: testData
+    })
+    .then(
+        function createSuccess(testdata) {
+            res.json({
+                testdata: testdata
+            });
+
+        },
+        function createError(err) { //18
+            res.send(500, err.message);
+        }
+    );
+});
+
 
 module.exports = router;
 
@@ -139,3 +159,5 @@ module.exports = router;
 //16. In our callback, rather than res.send(), we will invoke the .json() method. This will, of course, package our response as json.
 
 //17. The same object that was added to the database is now being sent back to the client and stored in a testdata property.
+
+//18. The addition that we've made here is an error function. If the create() function returns an error, it will be picked up by the createError() method. That method will then send back a 500 error with a message.
