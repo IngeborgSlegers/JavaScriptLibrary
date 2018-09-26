@@ -37,6 +37,20 @@ router.post('/createuser', function (req, res) {
         }
     );
 });
+        //19
+router.post('/signing', function (req, res) {
+            //13       //14     //15                               //16
+    User.findOne( { where: { username: req.body.user.username } } ).then(
+            //17
+        function(user) {
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(500).send({ error: "you failed, yo"});   //18
+            }
+        }
+    )
+})
 
 module.exports = router;
 
@@ -63,3 +77,17 @@ module.exports = router;
 //11. The system goes outside the current file to the .env file, where it looks for something called JWT_SECRET. The value of the secret is stored in that environment variable.
 
 //12. We're adding the hashSync() function to our new User object so that we don't store the password in a format that is easy to read. In our code, we supply the original password and tell bcrypt to use the sale 10 times.
+
+//13. The findOne() method is a Sequelize method that does exactly what if says: it tries to find something within the database that we tell it to look for. This is called Data Retrieval.
+
+//14. where is an object within Sequelize that tells the database to look for something matching its properties.
+
+//15. We're looking in the username column in the user table for one thing that matches the value passed from the client.
+
+//16. The prmose is handled within the .then() function.
+
+//17. Here we have a function that is called when the promise is resolved, and if successful, sends the user object back in the response.
+
+//18. Function called if the promise is rejected. We print the rror to the console.
+
+//19. We're sending data this time, so we use router.post instead of router.get.
