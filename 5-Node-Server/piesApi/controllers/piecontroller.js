@@ -2,10 +2,13 @@ let router = require('express').Router();
 //             ||
 // let express = require('express')
 // let router = express.Router();
+
 const Pie = require('../db').import('../models/pie')
 //              ||
 // const sequelize = require('../db')
 // const Pie = sequelize.import('../models/pie')
+
+const validateSession = require('../middleware/validate-session')
 
 // router.get('/', (req, res) => res.send('I love pie!'))
 // router.get('/tasty', (req, res) => res.send('Pies taste really good!'))
@@ -16,7 +19,7 @@ router.get('/', (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 })
 
-router.post('/', (req, res) => {
+router.post('/', validateSession, (req, res) => {
     if(!req.errors) {
         const pieFromRequest = {
             nameOfPie: req.body.nameOfPie,
@@ -40,7 +43,7 @@ router.get('/:nameOfPie', (req, res) => {
       .catch(err => res.status(500).json({ error: err}))
   })
   
-router.put('/:id', (req, res) => {
+router.put('/:id', validateSession, (req, res) => {
     if (!req.errors) {
         Pie.update(req.body, { where: { id: req.params.id }})
         .then(pie => res.status(200).json(pie))
@@ -50,7 +53,7 @@ router.put('/:id', (req, res) => {
     }
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateSession, (req, res) => {
     Pie.destroy({ where: {id: req.params.id }})
     .then(pie => res.status(200).json(pie))
     .catch(err => res.status(500).json({ error: err}))

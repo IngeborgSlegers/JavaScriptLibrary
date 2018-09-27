@@ -38,16 +38,35 @@ router.post('/createuser', function (req, res) {
     );
 });
         //19
-router.post('/signing', function (req, res) {
+router.post('/signin', function (req, res) {
             //13       //14     //15                               //16
     User.findOne( { where: { username: req.body.user.username } } ).then(
             //17
         function(user) {
+            //20
             if (user) {
-                res.json(user);
-            } else {
-                res.status(500).send({ error: "you failed, yo"});   //18
+                    //21                //22                    //23                //24
+                bcrypt.compare(req.body.user.password, user.passwordhash, function (err, matches) {
+                    //console.log("The value matches:", matches);  //25
+                    //27
+                    if (matches) {
+                          //28
+                        let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24 });
+                        res.json({  //29
+                            user: user,
+                            message: "successfully authenticated",
+                            sessionToken: token
+                        });
+                    } else { //30
+                        res.status(502).send({ error: "you failed, yo" });
+                    };
+                })
+            } else {    //26
+                res.status(500).send({ error: "failed to authenticate"});   //18
             }
+        },
+        function (err) {
+            res.status(501).send({ error: "you failed, yo"});
         }
     )
 })
@@ -84,10 +103,32 @@ module.exports = router;
 
 //15. We're looking in the username column in the user table for one thing that matches the value passed from the client.
 
-//16. The prmose is handled within the .then() function.
+//16. The promise is handled within the .then() function.
 
 //17. Here we have a function that is called when the promise is resolved, and if successful, sends the user object back in the response.
 
 //18. Function called if the promise is rejected. We print the rror to the console.
 
 //19. We're sending data this time, so we use router.post instead of router.get.
+
+//20. First, we check to make sure that a match for the username was found.
+
+//21. Before, we used bcrypt to encrypt the password. Now, we use it to decrypt the hash value and compare it to the supplied password. This is a complex task, and we let the highly reputable and revered bcrypt package handle the algorithm for doing that. As a best practice, you shouldn't try to write or use something that you have written. It will take months of your life to rebuild something that is already working.
+
+//22. Here, we pull in the password value from the current request when the user is signing up.
+
+//23. This pulls the hashed password password value from the database.
+
+//24. Run a callback function that will run on either success or failure of compare.
+
+//25. If the hashed password in the database matches the one that has been entered, print to the console that the password values match. Note that the matches variable is a boolean.
+
+//26. Handle situations where the match fails.
+
+//27. Here we use the callback function from the compare() method. If the username and password are a match, this will be set to true, and the expression in the conditional will execute.
+
+//28. Upon success, we will create a new token for the session. Note that this code uses the same jwt.sign method that we used upon sign up. 
+
+//29. We return the user object with a success message and sessionToken.
+
+//30. If the passwords don't match or the username is not correct, we send a response telling the client that authentication did not occur.
