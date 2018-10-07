@@ -115,6 +115,33 @@ router.post('/seven', function (req, res) {
     );
 });
 
+/***************************************
+* GET:  Get simple message from server
+***************************************/
+router.get('/helloclient', function (req, res) {
+    res.send('This is a message from the server to the client.')
+})
+
+/************************
+ * GET:  /one
+************************/
+router.get('/one', function(req, res) {
+
+    TestModel
+    .findAll({ //19
+        attributes: ['id', 'testdata']
+    })
+    .then(
+        function findAllSuccess(data) {
+            console.log("Controller data:", data);
+            res.json(data);
+        },
+        function findAllError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
+
 
 module.exports = router;
 
@@ -161,3 +188,5 @@ module.exports = router;
 //17. The same object that was added to the database is now being sent back to the client and stored in a testdata property.
 
 //18. The addition that we've made here is an error function. If the create() function returns an error, it will be picked up by the createError() method. That method will then send back a 500 error with a message.
+
+//19. Notice that we find the attributes for two of the columns:  id   and   testdata. This is part of sequelize. If you are querying an entire table, you can choose which columns you want to grab from. The other columns will not be queries, which can save time for a giant table.
