@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Home extends React.Component {
+export default class Home extends Component {
     render() {
         return (
             <div className='main'>
                 <div className='mainDiv'>
-                    <h1>Welcome to React Fundamentals at Eleven FIfty</h1>
+                    <h1>Welcome to React Fundamentals at Eleven Fifty</h1>
                     <p>
                         This app is intended to be a starter/tutorial app for your upcoming project and a learning sandbox for you in months and years to come should you continue to develope software with React. In this application, we will work through some of the basic React concepts, build out some small application, and then unleash you to build your own applications.
                     </p>
@@ -24,6 +24,6 @@ export default class Home extends React.Component {
                     </ul>
                 </div>
             </div>
-        )
+        );
     }
 }
