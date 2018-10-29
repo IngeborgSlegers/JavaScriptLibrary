@@ -1,0 +1,12 @@
+<div
+    *ngIf="_book"
+    class="card"
+>
+    <div class="cardContainer">
+        <h1><i>{{ _book.bookName }}</i></h1>
+        <h3>{{ _book.author }}</h3>
+        <p>{{ _book.genre }}</p>
+        <p>{{ _book.pubYear }}</p>
+        <p>{{ _book.rating }}</p>
+    </div>
+</div>

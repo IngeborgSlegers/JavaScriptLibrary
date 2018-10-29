@@ -1,0 +1,41 @@
+<form (ngSubmit)="onCreateBook()" [formGroup]='createBook'>
+  <input 
+  type="text"
+  placeholder="Book Name"
+  formControlName="bookName"
+  name="bookName"
+  >
+  <input 
+  type="text"
+  placeholder="Author"
+  formControlName="author"
+  name="author"
+  >
+  <input 
+  type="text"
+  placeholder="Genre"
+  formControlName="genre"
+  name="genre"
+  >
+  <input 
+  type="number"
+  placeholder="Publication Year"
+  formControlName="pubYear"
+  name="pubYear"
+  >
+  <input 
+  type="number"
+  placeholder="Rating"
+  formControlName="rating"
+  name="rating"
+  >
+
+  <button 
+  type="submit"
+  [disabled] = "!useBtn"
+  >
+    {{ useBtn === false ? 'Think About a Book' : 'Add Book' }}
+  </button>
+</form>
+
+<app-book *ngFor="let buhk of books" [book] = "buhk"></app-book>
